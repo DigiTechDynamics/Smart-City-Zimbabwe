@@ -122,7 +122,7 @@ body {
 .status-assigned { background: rgba(33, 150, 243, 0.2); color: #2196f3; }
 .status-resolved { background: rgba(76, 175, 80, 0.2); color: #4caf50; }
 
-input, textarea, select {
+input, textarea {
   width: 100%;
   padding: 12px;
   margin-top: 8px;
@@ -133,6 +133,32 @@ input, textarea, select {
   outline: none;
 }
 
-input:focus, textarea:focus {
+select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  /* Solid background so dropdown panel text is always readable */
+  background: #1a1d24;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: white;
+  outline: none;
+  cursor: pointer;
+  appearance: auto;
+}
+
+/* Force browser-native option list to use a readable dark theme */
+select option {
+  background: #1a1d24;
+  color: #ffffff;
+}
+
+select option:checked,
+select option:hover {
+  background: var(--accent-electricity);
+  color: #000000;
+}
+
+input:focus, textarea:focus, select:focus {
   border-color: var(--accent-electricity);
 }
