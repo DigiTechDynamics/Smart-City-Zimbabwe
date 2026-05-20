@@ -125,7 +125,7 @@ body {
 .status-assigned { background: rgba(33, 150, 243, 0.2); color: #2196f3; }
 .status-resolved { background: rgba(76, 175, 80, 0.2); color: #4caf50; }
 
-input, textarea, select {
+input, textarea {
   width: 100%;
   padding: 12px;
   margin-top: 8px;
