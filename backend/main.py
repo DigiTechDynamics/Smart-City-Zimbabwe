@@ -121,6 +121,19 @@ def create_category(category: schemas.CategoryCreate, db: Session = Depends(get_
     db.refresh(db_category)
     return db_category
 
+@app.patch("/categories/{category_id}", response_model=schemas.CategoryResponse)
+def update_category(category_id: int, update_data: schemas.CategoryUpdate, db: Session = Depends(get_db)):
+    db_category = db.query(models.Category).filter(models.Category.id == category_id).first()
+    if not db_category:
+        raise HTTPException(status_code=404, detail="Category not found")
+    
+    if update_data.name:
+        db_category.name = update_data.name
+        
+    db.commit()
+    db.refresh(db_category)
+    return db_category
+
 @app.get("/issues/{ref_number}", response_model=schemas.IssueResponse)
 def get_issue(ref_number: str, db: Session = Depends(get_db)):
     issue = db.query(models.Issue).filter(models.Issue.reference_number == ref_number).first()

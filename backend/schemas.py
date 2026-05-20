@@ -101,6 +101,9 @@ class CategoryResponse(CategoryBase):
     class Config:
         from_attributes = True
 
+class CategoryUpdate(BaseModel):
+    name: str
+
 class WorkforceMemberUpdate(BaseModel):
     full_name: Optional[str] = None
     email: Optional[str] = None

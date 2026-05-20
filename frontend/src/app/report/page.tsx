@@ -2,8 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 
 import { createIssue, fetchCategories } from '../lib/api';
+
+const DynamicMap = dynamic(() => import('../components/Map'), { 
+  ssr: false,
+  loading: () => <div style={{ height: '300px', background: 'rgba(0,0,0,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px' }}>Loading Map Engine...</div>
+});
 
 export default function ReportIssue() {
   const router = useRouter();
@@ -12,7 +18,9 @@ export default function ReportIssue() {
     category: '',
     description: '',
     address: '',
-    priority: 'medium'
+    priority: 'medium',
+    latitude: null as number | null,
+    longitude: null as number | null
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedRef, setSubmittedRef] = useState<string | null>(null);
@@ -146,9 +154,18 @@ export default function ReportIssue() {
               value={formData.address}
               onChange={(e) => setFormData({...formData, address: e.target.value})}
             />
-            <div style={{ marginTop: '10px', height: '200px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-               <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Geo-location tagging enabled</span>
+            <div style={{ marginTop: '10px', height: '300px', borderRadius: '8px', overflow: 'hidden' }}>
+               <DynamicMap 
+                 selectedLocation={formData.latitude ? { lat: formData.latitude, lng: formData.longitude! } : null}
+                 onLocationSelect={(lat, lng) => {
+                   setFormData({...formData, latitude: lat, longitude: lng});
+                   if (!formData.address || formData.address.match(/^-?\d+\.\d+, -?\d+\.\d+$/)) {
+                      setFormData(prev => ({...prev, address: `${lat.toFixed(4)}, ${lng.toFixed(4)}`}));
+                   }
+                 }}
+               />
             </div>
+            {formData.latitude && <div style={{ fontSize: '0.8rem', color: '#4caf50', marginTop: '8px' }}>✓ Location pinpointed on map</div>}
           </div>
 
           <button 

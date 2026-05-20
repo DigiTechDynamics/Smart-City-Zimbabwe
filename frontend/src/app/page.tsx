@@ -51,7 +51,7 @@ export default function Home() {
           </button>
         </Link>
         <Link href="/track">
-          <button className="btn-primary" style={{ fontSize: '1.1rem', padding: '15px 40px', background: 'transparent', border: '1px solid var(--accent-electricity)' }}>
+          <button className="btn-primary" style={{ fontSize: '1.1rem', padding: '15px 40px', background: 'transparent', border: '1px solid var(--accent-electricity)', color: 'var(--text-primary)' }}>
             Track Existing Issue
           </button>
         </Link>
@@ -77,6 +77,27 @@ export default function Home() {
           <h2 style={{ color: 'var(--accent-roads)', marginBottom: '10px' }}>Roads & Infra</h2>
           <p style={{ color: 'var(--text-secondary)' }}>Ministry of Transport</p>
           <div style={{ marginTop: '20px', fontSize: '2rem', fontWeight: 'bold' }}>8 Active</div>
+          <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Reports this week</div>
+        </div>
+
+        <div className="glass-card">
+          <h2 style={{ color: 'var(--accent-green)', marginBottom: '10px' }}>Waste Management</h2>
+          <p style={{ color: 'var(--text-secondary)' }}>Environmental Services</p>
+          <div style={{ marginTop: '20px', fontSize: '2rem', fontWeight: 'bold' }}>15 Active</div>
+          <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Reports this week</div>
+        </div>
+
+        <div className="glass-card">
+          <h2 style={{ color: 'var(--accent-urgent)', marginBottom: '10px' }}>Emergency Services</h2>
+          <p style={{ color: 'var(--text-secondary)' }}>Fire & Rescue</p>
+          <div style={{ marginTop: '20px', fontSize: '2rem', fontWeight: 'bold' }}>3 Active</div>
+          <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Reports this week</div>
+        </div>
+
+        <div className="glass-card">
+          <h2 style={{ color: 'var(--accent-yellow)', marginBottom: '10px' }}>Public Health</h2>
+          <p style={{ color: 'var(--text-secondary)' }}>City Health Department</p>
+          <div style={{ marginTop: '20px', fontSize: '2rem', fontWeight: 'bold' }}>7 Active</div>
           <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Reports this week</div>
         </div>
       </div>

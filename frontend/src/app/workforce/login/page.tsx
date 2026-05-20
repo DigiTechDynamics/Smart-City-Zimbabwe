@@ -49,7 +49,7 @@ export default function WorkforceLogin() {
           </button>
         </form>
         <div style={{ marginTop:'24px', textAlign:'center', fontSize:'0.8rem', color:'var(--text-secondary)' }}>
-          🔒 Workforce members only · <a href="/admin/login" style={{ color:'var(--accent-electricity)', textDecoration:'none' }}>Admin Login →</a>
+          🔒 Workforce members only · <a href="/smartcityzim/login" style={{ color:'var(--accent-electricity)', textDecoration:'none' }}>Admin Login →</a>
         </div>
       </div>
     </main>

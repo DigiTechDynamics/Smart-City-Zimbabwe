@@ -1,4 +1,14 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+const getApiBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL;
+  }
+  if (typeof window !== 'undefined') {
+    return `http://${window.location.hostname}:8000`;
+  }
+  return 'http://127.0.0.1:8000';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 export { API_BASE_URL };
 
@@ -170,5 +180,15 @@ export async function createCategory(data: any) {
     body: JSON.stringify(data),
   });
   if (!response.ok) throw new Error('Failed to create category');
+  return response.json();
+}
+
+export async function updateCategory(categoryId: number, data: any) {
+  const response = await fetch(`${API_BASE_URL}/categories/${categoryId}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) throw new Error('Failed to update category');
   return response.json();
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -13,7 +13,16 @@ const icon = L.icon({
   iconAnchor: [12, 41],
 });
 
-export default function Map({ issues }: { issues: any[] }) {
+function LocationSelector({ onLocationSelect }: { onLocationSelect: (lat: number, lng: number) => void }) {
+  useMapEvents({
+    click(e) {
+      onLocationSelect(e.latlng.lat, e.latlng.lng);
+    },
+  });
+  return null;
+}
+
+export default function Map({ issues, onLocationSelect, selectedLocation }: { issues?: any[], onLocationSelect?: (lat: number, lng: number) => void, selectedLocation?: { lat: number, lng: number } | null }) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -26,7 +35,7 @@ export default function Map({ issues }: { issues: any[] }) {
 
   return (
     <MapContainer 
-      center={zimbabweCenter} 
+      center={selectedLocation ? [selectedLocation.lat, selectedLocation.lng] : zimbabweCenter} 
       zoom={12} 
       style={{ height: '100%', width: '100%', borderRadius: '16px' }}
     >
@@ -34,7 +43,15 @@ export default function Map({ issues }: { issues: any[] }) {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      {issues.map((issue) => (
+      
+      {onLocationSelect && <LocationSelector onLocationSelect={onLocationSelect} />}
+
+      {selectedLocation && (
+        <Marker position={[selectedLocation.lat, selectedLocation.lng]} icon={icon}>
+          <Popup><div style={{ color: '#000' }}>Selected Location</div></Popup>
+        </Marker>
+      )}
+      {issues && issues.map((issue) => (
         issue.lat && issue.lng && (
           <Marker key={issue.id} position={[issue.lat, issue.lng]} icon={icon}>
             <Popup>
